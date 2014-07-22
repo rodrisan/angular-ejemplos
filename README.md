@@ -16,3 +16,5 @@ Y para Windows es:
 ```sh
 python -m http.server 9090
 ```
+
+Obviamente tienen que estar parados en la carpeta donde se encuentran los archivos para entonces ejecutar el comando.
