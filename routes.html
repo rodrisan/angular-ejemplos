@@ -2,46 +2,46 @@
 <html ng-app="AMail">
 	<head>
 		<title>My Angular App</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js"></script>
-
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-sanitize.min.js"></script>
 	</head>
 <body>
 
-	<h1>Lista de correos</h1>
 	<div ng-view>
 	</div>
 
 	<script>
 
-		var messages = [{
-			id: 0, sender: 'jean@somecompany.com', subject: 'Hi there, old friend',
-			date: 'Dec 7, 2013 12:32:00', recipients: ['greg@somecompany.com'],
-			message: 'Hey, we should get together for lunch sometime and catch up.'
-	    }, {
-			id: 1,  sender: 'maria@somecompany.com',
-			subject: 'Where did you leave my laptop?',
-			date: 'Dec 7, 2013 8:15:12', recipients: ['greg@somecompany.com'],
-			message: 'I thought you were going to put it in my desk drawer.'
-	    }, {
-			id: 2, sender: 'bill@somecompany.com', subject: 'Lost python',
-			date: 'Dec 6, 2013 20:35:02', recipients: ['greg@somecompany.com'],
-			message: 'Nobody panic, but my pet python is missing from her cage.'
-		} ];
-
-		angular.module('AMail', ['ngRoute'])
-		.controller('ListController', function($scope){
-			$scope.messages = messages;
-		}).controller('DetailController', function($scope, $routeParams){
-			$scope.message = messages[$routeParams.id];
+		angular.module('AMail', ['ngRoute', 'ngSanitize'])
+		.controller('ListController', function($scope, $http){
+			
+			$http.get('/api/get_recent_posts/').
+			success(function(data, status, headers, config) {
+				$scope.title = "Sitio Web";
+				$scope.messages = data.posts;
+			}).
+			error(function(data, status, headers, config) {
+			  // log error
+			});
+			
+		}).controller('DetailController', function($scope, $routeParams, $http){
+			$http.get('/api/get_post/?slug='+[$routeParams.slug]).
+			success(function(data, status, headers, config) {
+				$scope.title = data.post.title;
+				$scope.message = data.post;
+			}).
+			error(function(data, status, headers, config) {
+			  // log error
+			});
 		})
-		.config(function($routeProvider){
+		.config(['$httpProvider', '$routeProvider', function ($httpProvider, $routeProvider) {
 			$routeProvider
 			.when('/', {
         		controller: 'ListController',
         		templateUrl: 'views/list.html'
         	}).
-      		when('/view/:id', {
+      		when('/:slug', {
 		        controller: 'DetailController',
 		        templateUrl: 'views/detail.html'
 			}).
@@ -49,7 +49,7 @@
 				redirectTo: '/'
 			});
 
-		});
+		}]);
 
 	    
 	</script>
