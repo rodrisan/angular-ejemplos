@@ -11,7 +11,7 @@ Para probar las rutas tienen que hacerlo desde un servidor http, si les da mucha
 python -m SimpleHTTPServer 9090
 ```
 
-OY para Windows es:
+Y para Windows es:
 
 ```sh
 python -m http.server 9090
