@@ -1,0 +1,41 @@
+<!doctype html>
+<html ng-app>
+	<head>
+		<title>My Angular App</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+	</head>
+	<body>
+		<style type="text/css">
+		.rojo { 
+			background-color: red;
+		}
+		.amarillo { 
+			background-color: yellow;
+		}
+		</style>
+
+		<div ng-controller='EstilosController'>
+			<div ng-class='{rojo: esRojo, amarillo: esAmarillo}'>{{texto}}</div>
+			<button ng-click='verRojo()'>Ver rojo</button>
+			<button ng-click='verAmarillo()'>Ver amarillo</button>
+		</div>
+
+		<script type="text/javascript">
+
+			function EstilosController($scope) { 
+				$scope.esRojo = false; 
+				$scope.esAmarillo = false;
+				$scope.verRojo = function() { 
+					$scope.texto = 'Esto es rojo'; 
+					$scope.esRojo = true;
+					$scope.esAmarillo = false;
+				};
+				$scope.verAmarillo = function() {
+					$scope.texto = 'Esto es amarillo'; 
+					$scope.esAmarillo = true;
+					$scope.esRojo = false;
+				}; 
+			}
+		</script>
+	</body>
+</html>

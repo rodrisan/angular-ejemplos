@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+	<head>
+		<title>My Angular App</title>
+     	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+   	</head>
+	<body ng-app>
+		<div ng-controller='VerOcultarCtrl'>
+			<button ng-click='showHideMenu()'>Toggle Menu</button>
+			<ul ng-hide='menuState.show'>
+				<li>Menu 1</li>
+				<li>Menu 2</li>
+				<li>Menu 3</li>
+			</ul>
+		</div>
+	<script>
+	function VerOcultarCtrl($scope) {
+		$scope.menuState = { 
+			show: false
+		};
+		$scope.showHideMenu = function() {
+			$scope.menuState.show = !$scope.menuState.show;
+		};
+	}
+	</script>
+
+	</body>
+</html>

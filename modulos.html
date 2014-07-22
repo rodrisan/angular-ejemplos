@@ -1,0 +1,20 @@
+<!doctype html>
+<html ng-app='modulos'>
+	<head>
+		<title>My Angular App</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+	</head>
+	<body ng-controller='ModuloControlador'>
+		<p>{{objeto.texto}}</p>
+		<script type="text/javascript">
+
+			var miModulo = angular.module('modulos', []);
+			
+			miModulo.controller('ModuloControlador', function($scope) {
+				var objeto = {};
+				objeto.texto = 'Hola Mundo';
+				$scope.objeto = objeto;
+			});
+		</script>
+	</body>
+</html>

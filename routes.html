@@ -1,0 +1,57 @@
+<!doctype html>
+<html ng-app="AMail">
+	<head>
+		<title>My Angular App</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js"></script>
+
+	</head>
+<body>
+
+	<h1>Lista de correos</h1>
+	<div ng-view>
+	</div>
+
+	<script>
+
+		var messages = [{
+			id: 0, sender: 'jean@somecompany.com', subject: 'Hi there, old friend',
+			date: 'Dec 7, 2013 12:32:00', recipients: ['greg@somecompany.com'],
+			message: 'Hey, we should get together for lunch sometime and catch up.'
+	    }, {
+			id: 1,  sender: 'maria@somecompany.com',
+			subject: 'Where did you leave my laptop?',
+			date: 'Dec 7, 2013 8:15:12', recipients: ['greg@somecompany.com'],
+			message: 'I thought you were going to put it in my desk drawer.'
+	    }, {
+			id: 2, sender: 'bill@somecompany.com', subject: 'Lost python',
+			date: 'Dec 6, 2013 20:35:02', recipients: ['greg@somecompany.com'],
+			message: 'Nobody panic, but my pet python is missing from her cage.'
+		} ];
+
+		angular.module('AMail', ['ngRoute'])
+		.controller('ListController', function($scope){
+			$scope.messages = messages;
+		}).controller('DetailController', function($scope, $routeParams){
+			$scope.message = messages[$routeParams.id];
+		})
+		.config(function($routeProvider){
+			$routeProvider
+			.when('/', {
+        		controller: 'ListController',
+        		templateUrl: 'views/list.html'
+        	}).
+      		when('/view/:id', {
+		        controller: 'DetailController',
+		        templateUrl: 'views/detail.html'
+			}).
+			otherwise({
+				redirectTo: '/'
+			});
+
+		});
+
+	    
+	</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+	<head>
+		<title>My Angular App</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+	</head>
+	<body ng-app='Filtros' ng-controller="BodyController">
+
+		<h1>{{texto }}</h1>
+
+		<script type="text/javascript">
+
+			var Filtros = angular.module('Filtros', []);
+
+			Filtros.filter('titleCase', function() {
+
+				var titleCaseFilter = function(input) {
+					var words = input.split(' ');
+					for (var i = 0; i < words.length; i++) {
+          				words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+        			}
+					return words.join(' ');
+				};
+
+				return titleCaseFilter; 
+			});
+
+			function BodyController($scope) {
+				$scope.texto = 'Todas las letras tienen algo especial';
+			}
+		</script>
+	</body>
+</html>
